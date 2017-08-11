@@ -1,5 +1,5 @@
 # Docker file to Laravel Docker
-FROM  php:5.6-apache
+FROM php:5.6-apache
 MAINTAINER Jon Dotsoy <hi@jon.soy> (http://jon.soy/)
 
 # Get Composer
@@ -19,6 +19,11 @@ RUN echo "Zip Archive" && apt-get install -y zlib1g-dev && docker-php-ext-instal
 RUN echo "mbstring bcmath" && docker-php-ext-install bcmath mbstring
 RUN echo "Libmcrypt-dev" && apt-get install -y libmcrypt-dev
 RUN echo "mcrypt" && docker-php-ext-install mcrypt
+RUN apt-get install -y libxml2-dev php-soap
+RUN echo "Soap" && docker-php-ext-install soap
+RUN echo "Calendar" && docker-php-ext-configure calendar
+RUN docker-php-ext-install calendar
+RUN echo "mysql" && docker-php-ext-install mysql mysqli pdo pdo_mysql
 
 # Add Bin Composer in PATH
 ENV PATH ${PATH}:~/.composer/vendor/bin
